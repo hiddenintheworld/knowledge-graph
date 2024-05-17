@@ -15,7 +15,7 @@ export async function submitToAPI(apiEndpointsData, selectedEndpointUrl, userInp
         requestData.contents[0].parts[0].text = finalPrompt;
     }
 
-    const proxyUrl = 'http://localhost:3000/proxy';
+    const proxyUrl = 'http://localhost:8000/proxy';
     const queryParams = endpointConfig.params ? new URLSearchParams(endpointConfig.params).toString() : '';
 
     try {

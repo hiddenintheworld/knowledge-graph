@@ -1,7 +1,7 @@
 
 // apiInteraction.js
 export async function submitToAPI(endpoint, method, headers, body, requiresPolling = false, pollingUrl = '', pollingInterval = 5000, maxPollingAttempts = 12) {
-    const proxyUrl = 'http://localhost:3000/proxy'; // Your proxy URL
+    const proxyUrl = 'http://localhost:8000/proxy'; // Your proxy URL
 
     try {
         // Initial API call through the proxy
@@ -42,7 +42,7 @@ export async function submitToAPI(endpoint, method, headers, body, requiresPolli
 
 // Poll for the result if the API requires it
 async function pollForResult(url, jobId, headers, interval, maxAttempts) {
-    const proxyUrl = 'http://localhost:3000/proxy'; // Your proxy URL
+    const proxyUrl = 'http://localhost:8000/proxy'; // Your proxy URL
     let attempts = 0;
 
     return new Promise(async (resolve, reject) => {
