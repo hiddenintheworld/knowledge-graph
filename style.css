@@ -1,0 +1,218 @@
+body, html { margin: 0; padding: 0; width: 100%; height: 100%; }
+/* Style for the top controls container */
+.controls {
+	display: flex;
+    flex-wrap: wrap; /* Allow controls to wrap onto the next line if space is insufficient */
+    position: fixed;
+	align-items: center; /* Align items in a flex container along the cross axis */
+	padding: 10px;
+    gap: 10px; /* Creates a gap between flex items */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #f0f0f0;
+    z-index: 5; /* Ensures controls stay above the graph */
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+/* Adjust the main container for Cytoscape graph to not overlap with controls */
+#cy {
+    position: relative;
+    top: 60px; /* Adjust based on the height of your controls */
+    right: 300px; /* Space for the sidebar */
+    bottom: 0;
+    left: 0;
+
+}
+
+.control-group { display: flex; align-items: center; margin-right: 10px; }
+.input-group { display: flex; align-items: center; }
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+/* Styling for different button groups */
+/* Main editing buttons (Node, Edge, Article) */
+.node-btn, .edge-btn, .button.toggle {
+    background-color: #4CAF50; /* Green */
+}
+.button.toggle:hover, .node-btn:hover, .edge-btn:hover {
+    background-color: #45a049;
+}
+
+/* Feature buttons (UserID, Type, Privacy, URL) */
+#toggleUserIdFeaturesBtn, #toggleTypeFeaturesBtn, #togglePrivacyLevelFeaturesBtn, #toggleUrlFeaturesBtn {
+    background-color: #FF9800; /* Orange */
+}
+#toggleUserIdFeaturesBtn:hover, #toggleTypeFeaturesBtn:hover, #togglePrivacyLevelFeaturesBtn:hover, #toggleUrlFeaturesBtn:hover {
+    background-color: #FB8C00;
+}
+
+/* Encryption buttons */
+#toggleEncryptionFeaturesBtn, #encryptGraphBtn, #decryptGraphBtn {
+    background-color: #9C27B0; /* Deep Purple */
+}
+#toggleEncryptionFeaturesBtn:hover, #encryptGraphBtn:hover, #decryptGraphBtn:hover {
+    background-color: #8E24AA;
+}
+
+/* Toggle Image Mode */
+#toggleImageModeBtn {
+    background-color: #03A9F4; /* Light Blue */
+}
+#toggleImageModeBtn:hover {
+    background-color: #039BE5;
+}
+
+/* Reset Zoom */
+.reset-btn {
+    background-color: #E91E63; /* Pink */
+}
+.reset-btn:hover {
+    background-color: #D81B60;
+}
+
+/* Import/Export buttons */
+.import-btn, .export-btn {
+    background-color: #607D8B; /* Blue Grey */
+}
+.import-btn:hover, .export-btn:hover {
+    background-color: #546E7A;
+}
+
+.input-group textarea, .input-group input {
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+/* Sidebar for node details */
+.details-sidebar {
+    position: fixed;
+    top: 50px; /* Adjust this value based on the actual height of your controls area */
+    right: 0;
+    width: 300px; /* Adjust width as needed */
+    height: calc(100% - 50px); /* Subtract the height of the controls area */
+    background-color: #fff;
+    overflow-y: auto;
+    box-shadow: -2px 0 5px rgba(0,0,0,.3);
+    padding: 20px;
+    display: none; /* Initially hidden */
+    z-index: 10; /* Ensure it's above other elements */
+}
+.details-sidebar, #nodeDetailsContent {
+    word-wrap: break-word; /* Allows long words to break and wrap to the next line */
+    white-space: normal; /* Ensures whitespace is handled normally, allowing wrapping */
+    overflow-wrap: break-word; /* Similar to word-wrap, ensures breaking and wrapping of long words */
+}
+
+.details-sidebar h2 {
+    margin-top: 0;
+}
+
+#apiFeatures {
+  position: relative;
+}
+
+.loader {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: #09f;
+  animation: spin 1s infinite linear;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); /* Center the loader */
+  margin-top: 8px; /* Space between the button and loader */
+}
+
+
+@keyframes spin {
+  0% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  100% {
+    transform: translateX(-50%) rotate(360deg);
+  }
+}
+
+.results-preview-box {
+  font-family: Arial, sans-serif; /* Match the font family */
+  font-size: 16px; /* Match the font size */
+  width: calc(100% - 22px); /* Full width of its container */
+  height: 200px; /* Set a fixed height or use vh for viewport-based height */
+  padding: 10px; /* Add some internal spacing */
+  border: 1px solid #ccc; /* A subtle border */
+  border-radius: 5px; /* Rounded corners */
+  background-color: #f9f9f9; /* Light background color */
+  resize: none; /* Disable resizing */
+  overflow: auto; /* Add scrollbar if content is long */
+  margin-top: 10px; /* Space from the preceding element */
+  white-space: pre-wrap; /* Keeps the formatting of spaces and line breaks */
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.1); /* Optional: Adds a subtle shadow inside the box */
+}
+
+
+.toolbar-btn {
+    margin: 5px; /* Reduced margin for less space between buttons */
+    background: transparent;
+    border: none;
+    padding: 5px; /* Adds padding for better clickability */
+}
+
+.toolbar-btn img {
+    width: 30px;
+    height: 30px;
+}
+
+.toolbar-btn:active, .toolbar-btn:focus {
+    background-color: #e7e7e7;
+}
+
+.toolbar-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Slight white background on hover */
+    cursor: pointer; /* Change cursor to pointer to indicate clickable area */
+}
+
+#toolbar {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px;
+    display: flex;
+    background: transparent; /* Ensures the toolbar background is transparent */
+}
+
+.inverted-img {
+    filter: invert(100%);
+}
+
+.node-name-input {
+    position: relative;
+    z-index: 10;
+    display: none;
+    min-width: 50px; /* Updated minimum width */
+    padding: 15px;
+    box-sizing: border-box;
+    background-color: #000000; /* Light grey background for a modern look */
+    border: 3px solid #06a784; /* Subtle border */
+    transition: background-color 0.3s, border-color 0.3s; /* Smooth transitions for a modern feel */
+    border-radius: 10px; /* Rounded corners */
+  }
+  .node-name-input:focus {
+    background-color: #ffffff; /* Slightly lighter background on focus */
+    border-color: #000000; /* Darker border on focus */
+    box-shadow: 0 0 5px #5a5a5a; /* Subtle shadow for depth */
+    outline: none; /* Remove the default focus outline */
+}

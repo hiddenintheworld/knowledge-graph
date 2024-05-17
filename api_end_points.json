@@ -1,0 +1,124 @@
+{
+  "endpoints": [
+    {
+      "name": "Mistral Embeddings",
+      "url": "https://api.mistral.ai/v1/embeddings",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer $MISTRAL_API_KEY"
+      },
+      "data": {
+        "model": "mistral-embed",
+        "input": []
+      }
+    },
+    {
+      "name": "Mistral Chat Completions",
+      "url": "https://api.mistral.ai/v1/chat/completions",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer $MISTRAL_API_KEY"
+      },
+      "data": {
+        "model": "mistral-tiny",
+        "messages": []
+      }
+    },
+    {
+      "name": "Codellama-7b-instruct",
+      "url": "https://api.replicate.com/v1/predictions",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Token r8_8qfre1mpeMg8iiEvfTh2yrUICXiDn4q4UJCXG"
+      },
+      "data": {
+        "version": "aac3ab196f8a75729aab9368cd45ea6ad3fc793b6cda93b1ded17299df369332",
+        "input": {
+          "debug": false,
+          "top_k": 250,
+          "top_p": 1,
+          "prompt": "Can you write a poem about open source machine learning? Let's make it in the style of E. E. Cummings.",
+          "temperature": 0.5,
+          "system_prompt": "I am trying to convert everything to knowledge graph, this is the format of knowledge graph, we have node ->(edge) -> node , the edge is like verb  or description that can find corrlation, please read the given article I provide and convert, here is the format: self-control -> (predicts) -> outcomes self-control -> (reduces) -> temptations self-control -> (leads to) -> happiness lifestyle -> (includes) -> exercise lifestyle -> (includes) -> savings lifestyle -> (includes) -> reading temptations -> (challenge) -> willpower willpower -> (studied by) -> science papers -> (reveal) -> strategies outcomes -> (improve) -> health outcomes -> (improve) -> relationships outcomes -> (reduce) -> impulses. Please come up with as much nodes and edges as possibile, but balance between quality and quantity so the output is still importance. Only return the graph content and nothing else!!! Also remember the one-word node rule, which is explained later!! Only node ->(edge) -> node only, do not return other things, result should only contain the result needed, for example \" self-control -> (predicts) -> outcomes  lifestyle -> (includes) -> fruits\" !!! When creating a knowledge graph from the provided article, adhere to the following refined guidelines to ensure consistency, clarity, and adherence to the one-word node rule, including the separation of composite concepts: Single-word Nodes for Composite Concepts: For composite concepts (e.g., \"fruits and vegetables\"), create separate nodes and edges for each component. For instance, use \"lifestyle\" -> \"fruits\" and \"lifestyle\" -> \"vegetables\". This ensures clarity and adherence to the one-word node rule. Direct and Clear Relationships: Define each edge with a direct and clear relationship between two nodes using a single verb or a succinct descriptive phrase, ensuring the connection is straightforward and unambiguous. Consistent Language for Relationships: Maintain consistent terminology across similar relationships to avoid confusion and ensure uniformity in the knowledge graph's structure. Edge Description Format: Adhere to the \"source\" -> (\"description\") -> \"target\" format for all edges, providing a clear and structured representation of the relationships. Focus on Core Concepts: Concentrate on the primary ideas and relationships relevant to self-control, lifestyle choices, and their impacts, avoiding secondary details that do not contribute significantly to the main themes. Limitation on Edge Descriptions: Keep edge descriptions concise, preferably to one verb or a maximum of three words, to maintain simplicity and ease of understanding. Relevance and Meaningfulness: Ensure each edge is meaningful and directly related to the article's central themes, emphasizing the importance of self-control and its effects on lifestyle and outcomes. Comprehensive Yet Concise List of Edges: Strive for a balance between thoroughness and conciseness, focusing on edges that add value and clarity to the understanding of the article's main points. Review and Refinement: After drafting, review each edge to confirm it meets the above criteria. Refine as necessary to ensure all edges contribute to a standardized and coherent knowledge graph. \n. Please remember, do not give me result like Outcomes -> (improve) -> relationships outcomes, relationships outcomes are two words, unless you have a hipen - between the two so it is one word. Article is provided here: ",
+          "max_new_tokens": 500,
+          "min_new_tokens": -1
+
+        }
+      }
+    },
+	{
+      "name": "Llama-2-70b",
+      "url": "https://api.replicate.com/v1/models/meta/llama-2-70b-chat/predictions",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Token r8_8qfre1mpeMg8iiEvfTh2yrUICXiDn4q4UJCXG"
+      },
+      "data": {
+        "version": "02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3",
+        "input": {
+          "debug": false,
+          "top_k": 50,
+          "top_p": 1,
+          "prompt": "Can you write a poem about open source machine learning? Let's make it in the style of E. E. Cummings.",
+          "temperature": 0.5,
+          "system_prompt": "I am trying to convert everything to knowledge graph, this is the format of knowledge graph, we have node ->(edge) -> node , the edge is like verb  or description that can find corrlation, please read the given article I provide and convert, here is the format. Please come up with as much nodes and edges as possibile, but balance between quality and quantity so the output is still importance. Only return the graph content and nothing else, node ->(edge) -> node only, do not return other things, result should only contain the result needed, for example \" self-control -> (predicts) -> outcomes  lifestyle -> (includes) -> fruits\" !!! When creating a knowledge graph from the provided article, adhere to the following refined guidelines to ensure consistency, clarity, and adherence to the one-word node rule, including the separation of composite concepts: Single-word Nodes for Composite Concepts: For composite concepts (e.g., \"fruits and vegetables\"), create separate nodes and edges for each component. For instance, use \"lifestyle\" -> (includes) -> \"fruits\" and \"lifestyle\" -> (includes) -> \"vegetables\". This ensures clarity and adherence to the one-word node rule. Direct and Clear Relationships: Define each edge with a direct and clear relationship between two nodes using a single verb or a succinct descriptive phrase, ensuring the connection is straightforward and unambiguous. Consistent Language for Relationships: Maintain consistent terminology across similar relationships to avoid confusion and ensure uniformity in the knowledge graph's structure. Edge Description Format: Adhere to the \"source\" -> (\"description\") -> \"target\" format for all edges, providing a clear and structured representation of the relationships. Focus on Core Concepts: Concentrate on the primary ideas and relationships relevant to self-control, lifestyle choices, and their impacts, avoiding secondary details that do not contribute significantly to the main themes. Limitation on Edge Descriptions: Keep edge descriptions concise, preferably to one verb or a maximum of three words, to maintain simplicity and ease of understanding. Relevance and Meaningfulness: Ensure each edge is meaningful and directly related to the article's central themes, emphasizing the importance of self-control and its effects on lifestyle and outcomes. Comprehensive Yet Concise List of Edges: Strive for a balance between thoroughness and conciseness, focusing on edges that add value and clarity to the understanding of the article's main points. Review and Refinement: After drafting, review each edge to confirm it meets the above criteria. Refine as necessary to ensure all edges contribute to a standardized and coherent knowledge graph. \n Article is provided here: ",
+          "max_new_tokens": 500,
+          "min_new_tokens": -1
+        }
+      }
+    },
+	{
+      "name": "mixtral-8x7b-instruct-v0.1",
+	  "requiresPolling": true,
+	  "resultPath": "output",
+      "url": "https://api.replicate.com/v1/models/mistralai/mixtral-8x7b-instruct-v0.1/predictions",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Token r8_8qfre1mpeMg8iiEvfTh2yrUICXiDn4q4UJCXG"
+      },
+      "data": {
+        "version": "02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3",
+        "input": {
+          "debug": false,
+          "top_k": 250,
+          "top_p": 1,
+          "prompt": "Can you write a poem about open source machine learning? Let's make it in the style of E. E. Cummings.",
+          "temperature": 0.6,
+          "system_prompt": "I am trying to convert everything to knowledge graph, this is the format of knowledge graph, we have node ->(edge) -> node , the edge is like verb  or description that can find corrlation, please read the given article I provide and convert, here is the format. Please come up with as much nodes and edges as possibile, but balance between quality and quantity so the output is still importance. When creating a knowledge graph from the provided article, adhere to the following refined guidelines to ensure consistency, clarity, and adherence to the one-word node rule, including the separation of composite concepts: Single-word Nodes for Composite Concepts: For composite concepts (e.g., \"fruits and vegetables\"), create separate nodes and edges for each component. For instance, use \"lifestyle\" -> \"fruits\" and \"lifestyle\" -> \"vegetables\". This ensures clarity and adherence to the one-word node rule. Direct and Clear Relationships: Define each edge with a direct and clear relationship between two nodes using a single verb or a succinct descriptive phrase, ensuring the connection is straightforward and unambiguous. Consistent Language for Relationships: Maintain consistent terminology across similar relationships to avoid confusion and ensure uniformity in the knowledge graph's structure. Edge Description Format: Adhere to the \"source\" -> (\"description\") -> \"target\" format for all edges, providing a clear and structured representation of the relationships. Focus on Core Concepts: Concentrate on the primary ideas and relationships relevant to self-control, lifestyle choices, and their impacts, avoiding secondary details that do not contribute significantly to the main themes. Limitation on Edge Descriptions: Keep edge descriptions concise, preferably to one verb or a maximum of three words, to maintain simplicity and ease of understanding. Relevance and Meaningfulness: Ensure each edge is meaningful and directly related to the article's central themes, emphasizing the importance of self-control and its effects on lifestyle and outcomes. Comprehensive Yet Concise List of Edges: Strive for a balance between thoroughness and conciseness, focusing on edges that add value and clarity to the understanding of the article's main points. Review and Refinement: After drafting, review each edge to confirm it meets the above criteria. Refine as necessary to ensure all edges contribute to a standardized and coherent knowledge graph. Do not add something like references, summary... only the graph please. Only return the graph content and nothing else, node ->(edge) -> node only, do not return other things besides that, result should only contain the format \" self-control -> (predicts) -> outcomes  lifestyle -> (includes) -> fruits\" !!!\n Article is provided here: ",
+          "max_new_tokens": 1024,
+		  "prompt_template": "<s>[INST] {prompt} [/INST] ",
+          "presence_penalty": 0,
+		  "frequency_penalty": 0
+        }
+      }
+    },
+	{
+      "name": "Google Gemini Pro Content Generation",
+	  "requiresPolling": false,
+	  "resultPath": "candidates[0].content.parts",
+      "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "params": {
+        "key": "AIzaSyBV1BgyjJOFH8pGHGZszhGtL4aoKn1DkTA"
+      },
+      "data": {	
+        "contents": [{
+          "parts":[{
+            "text": ""
+          }]
+        }]
+      },
+      "system_prompt": "I am trying to convert everything to knowledge graph, this is the format of knowledge graph, we have node ->(edge) -> node , the edge is like verb  or description that can find corrlation, please read the given article I provide and convert, here is the format. Please come up with as much nodes and edges as possibile, but balance between quality and quantity so the output is still importance. Only return the graph content and nothing else, node ->(edge) -> node only, do not return other things, result should only contain the result needed, these are just example \" self-control -> (predicts) -> outcomes  lifestyle -> (includes) -> fruits\" !!! Direct and Clear Relationships: Define each edge with a direct and clear relationship between two nodes using a single verb or a succinct descriptive phrase, ensuring the connection is straightforward and unambiguous. Consistent Language for Relationships: Maintain consistent terminology across similar relationships to avoid confusion and ensure uniformity in the knowledge graph's structure. Edge Description Format: Adhere to the \"source\" -> (\"description\") -> \"target\" format for all edges, providing a clear and structured representation of the relationships. Focus on Core Concepts: Concentrate on the primary ideas and relationships relevant to self-control, lifestyle choices, and their impacts, avoiding secondary details that do not contribute significantly to the main themes. Limitation on Edge Descriptions: Keep edge descriptions concise, preferably to one verb or a maximum of three words, to maintain simplicity and ease of understanding. Relevance and Meaningfulness: Ensure each edge is meaningful and directly related to the article's central themes, emphasizing the importance of self-control and its effects on lifestyle and outcomes. Comprehensive Yet Concise List of Edges: Strive for a balance between thoroughness and conciseness, focusing on edges that add value and clarity to the understanding of the article's main points. Review and Refinement: After drafting, review each edge to confirm it meets the above criteria. Refine as necessary to ensure all edges contribute to a standardized and coherent knowledge graph. Do not give result for details stuffs which may not be primary concept that applicable to all cases like boost -> (give) -> 2x reward, like the 2x reward is different, so it should be just reward without the 2x, don't give me result like veSOLID Holders -> Earn -> 100% of Protocol's Trading Fees, since it is not always applicable to everything in this world, but things like Liquidity Mining -> Caused -> High Sell Pressure make sense to all cases so you can give me that. When creating a knowledge graph from the provided article, adhere to the following refined guidelines to ensure consistency, clarity, and adherence to the one-word node rule, including the separation of composite concepts: Single-word Nodes for Composite Concepts: For composite concepts (e.g., \"fruits and vegetables\"), create separate nodes and edges for each component. Another example, use \"lifestyle\" -> (includes) -> \"fruits\" and \"lifestyle\" -> (includes) -> \"vegetables\". This ensures clarity and adherence to the one-word node rule. please don't do something like General Relativity -> (inadequate) -> Describing Laws of Physics in Singularity, should be Relativity -> (inadequate) -> Law, also don't do like Black Hole -> (not) -> Formed in Big Bang, Black Hole -> (not formed) -> Big Bang. things like Universe -> (state) -> Hot and Dense, should be Universe -> (state) -> Hot and Universe -> (state) -> Dense. Inflation -> (caused) -> Rapid Expansion of Universe should be Inflation -> (caused) -> Expansion instead, Only one word is allowed for source and target remember! Only create knowledge graph for essential concept that is applicapable to everything, the things that you put inside should have an essential score of 50 / 100 !!!here is the article:"
+    }
+  ]
+}

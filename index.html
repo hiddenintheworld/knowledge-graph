@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+<head>
+    <title>Knowledge Graph Editor</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.19.1/cytoscape.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/cytoscape-edgehandles@4.0.1/cytoscape-edgehandles.js"></script>
+
+    <!-- CodeMirror CSS and JS from jsDelivr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.61.0/lib/codemirror.css">
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.61.0/lib/codemirror.js"></script>
+    <!-- CodeMirror JavaScript mode and add-ons -->
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.61.0/mode/javascript/javascript.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.61.0/addon/hint/show-hint.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.61.0/addon/hint/show-hint.css">
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+
+	<!-- Include CryptoJS for encryption -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+	<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.1.0/dist/autoComplete.min.js"></script>
+	
+
+
+
+</head>
+
+</head>
+<body>
+
+<div id="detailsSidebar" class="details-sidebar">
+    <h2>Node Details</h2>
+    <div id="nodeDetailsContent"></div>
+</div>
+
+<div id="controls" class="controls">
+    <div class="control-group">
+        <button class="button toggle" id="toggleNodeInputsBtn" aria-label="Toggle Node Controls">🔄 Node</button>
+        <div id="nodeControls" class="input-group" style="display: none;">
+            <button class="button node-btn" id="addNodeBtn" aria-label="Add Node">➕ Node</button>
+            <input type="text" id="node-id" placeholder="Node ID">
+            <button class="button node-btn" id="removeNodeBtn" aria-label="Remove Node">➖ Node</button>
+            <input type="text" id="remove-node-id" placeholder="Node ID to remove">
+        </div>
+    </div>
+    <div class="control-group">
+        <button class="button toggle" id="toggleEdgeInputsBtn" aria-label="Toggle Edge Controls">🔄 Edge</button>
+        <div id="edgeControls" class="input-group" style="display: none;">
+            <button class="button edge-btn" id="addEdgeBtn" aria-label="Add Edge">➕ Edge</button>
+            <input type="text" id="source-id" placeholder="Source ID">
+            <input type="text" id="target-id" placeholder="Target ID">
+            <input type="text" id="edge-description" placeholder="Verb/Description">
+            <button class="button edge-btn" id="removeEdgeBtn" aria-label="Remove Edge">➖ Edge</button>
+            <input type="text" id="remove-edge-description" placeholder="Edge Description to remove">
+        </div>
+    </div>
+	 <!-- Article Controls -->
+    <div class="control-group">
+        <button class="button toggle" id="toggleArticleInputsBtn" aria-label="Toggle Article Inputs">📝 Article</button>
+        <div id="articleControls" class="input-group" style="display: none;">
+            <input type="text" id="article-title" placeholder="Article Title">
+            <textarea id="article-description" placeholder="Description"></textarea>
+            <input type="text" id="article-hashtags" placeholder="Hashtags (e.g., #abc #efg)">
+            <button class="button" id="addArticleBtn" aria-label="Add Article">➕ Article</button>
+        </div>
+    </div>
+	<!-- API Features Control Group -->
+    <div class="control-group">
+        <button class="button" id="toggleAPIFeaturesBtn" aria-label="Toggle API Features">🌐 API</button>
+        <div id="apiFeatures" class="input-group" style="display: none;">
+            <select id="apiSelect" aria-label="Select API Endpoint">
+                <!-- API Endpoints will be populated here -->
+            </select>
+            <input type="text" id="apiInput" placeholder="Enter prompt" style="margin-left: 10px;">
+            <button class="button" id="submitToAPIBtn" aria-label="Submit to API">➡️ Submit</button>
+			
+			<button class="button" id="addToGraphBtn" aria-label="Add to Graph">Add to Graph</button>
+
+			<!-- Loading Animation Container -->
+			<div id="loadingAnimation" class="loading-animation" style="display: none;">
+				<div class="loader"></div>
+			</div>
+			 <!-- Results Preview Box -->
+			<textarea id="resultsBox" class="results-preview-box" placeholder="Results will appear here..."></textarea>
+        </div>
+    </div>
+	 <!-- UserId Features Control Group -->
+    <div class="control-group">
+        <button class="button" id="toggleUserIdFeaturesBtn" aria-label="Toggle UserId Features">🆔 Features</button>
+        <div id="userIdFeatures" class="input-group" style="display: none;">
+            <label>Enable UserId: <input type="checkbox" id="toggleUserId" /></label>
+            <input type="text" id="userIdInput" placeholder="UserId" style="margin-left: 10px;" />
+        </div>
+    </div>
+	<!-- Toggle for showing Type Features -->
+	<div class="control-group">
+        <button class="button" id="toggleTypeFeaturesBtn" aria-label="Toggle Type Features">🔠 Type</button>
+        <div id="typeFeatures" class="input-group" style="display: none;">
+            <label>Enable Type: <input type="checkbox" id="toggleType" /></label>
+            <input type="text" id="typeInput" placeholder="Type1,Type2" style="margin-left: 10px;" />
+        </div>
+    </div>
+	
+	<!-- Toggle Privacy Level Features -->
+	<div class="control-group">
+        <button class="button" id="togglePrivacyLevelFeaturesBtn" aria-label="Toggle Privacy Level Features">🔒 Privacy</button>
+        <div id="privacyLevelFeatures" class="input-group" style="display: none;">
+            <label>Enable Privacy Level: <input type="checkbox" id="togglePrivacyLevel" /></label>
+            <input type="text" id="privacyLevelInput" placeholder="Privacy Level" style="margin-left: 10px;" />
+        </div>
+    </div>
+
+	<!-- Toggle Url Level Features -->
+	<div class="control-group">
+        <button class="button" id="toggleUrlFeaturesBtn" aria-label="Toggle URL Features">🔗 URL</button>
+        <div id="urlFeatures" class="input-group" style="display: none;">
+            <label>Enable URL: <input type="checkbox" id="toggleUrl" /></label>
+            <input type="text" id="urlInput" placeholder="URL" style="margin-left: 10px;" />
+        </div>
+    </div>
+
+    <!-- Preprocessing Logic Control Group -->
+<div class="control-group">
+    <button class="button" id="togglePreprocessingFeaturesBtn" aria-label="Toggle Preprocessing Features">🔄 Preprocessing</button>
+    <div id="preprocessingFeatures" class="input-group" style="display: none;">
+        <label>Enable Preprocessing: <input type="checkbox" id="togglePreprocessing" /></label>
+        <input type="text" id="preprocessingInput" placeholder="Preprocessing Logic" style="margin-left: 10px;">
+    </div>
+</div>
+
+<!-- Post-processing Logic Control Group -->
+<div class="control-group">
+    <button class="button" id="togglePostprocessingFeaturesBtn" aria-label="Toggle Postprocessing Features">🔄 Postprocessing</button>
+    <div id="postprocessingFeatures" class="input-group" style="display: none;">
+        <label>Enable Postprocessing: <input type="checkbox" id="togglePostprocessing" /></label>
+        <input type="text" id="postprocessingInput" placeholder="Post-processing Logic" style="margin-left: 10px;">
+    </div>
+</div>
+
+<!-- Post-processing Logic Control Group -->
+<div class="control-group">
+    <button class="button" id="toggleManipulationFeaturesBtn" aria-label="Toggle Manipulation Features">🔄 Manupulation</button>
+    <div id="ManipulationFeatures" class="input-group" style="display: none;">
+        <label>Enable Manipulation: <input type="checkbox" id="toggleManipulation" /></label>
+        <input type="text" id="ManipulationInput" placeholder="Manipulation Logic" style="margin-left: 10px;">
+    </div>
+</div>
+
+<div class="control-group">
+    <button class="button" id="startProcessingBtn" aria-label="Start Processing">▶️ Start Processing</button>
+</div>
+
+
+<!-- API Endpoint Control Group -->
+<div class="control-group">
+    <button class="button" id="toggleApiEndpointFeaturesBtn" aria-label="Toggle API Endpoint Features">🌐 API Endpoint</button>
+    <div id="apiEndpointFeatures" class="input-group" style="display: none;">
+        <label>Enable API Endpoint: <input type="checkbox" id="toggleApiEndpoint" /></label>
+        <input type="text" id="apiEndpointInput" placeholder="API Endpoint" style="margin-left: 10px;">
+    </div>
+</div>
+
+	
+	<!-- Search Controls Toggle Button -->
+	<div class="control-group">
+		<button class="button" id="toggleSearchControlsBtn">🔍 Search</button>
+	</div>
+
+	<!-- Search Controls (Initially Hidden) -->
+	<div id="searchControls" class="input-group" style="display: none;">
+		<input type="text" id="searchInput" placeholder="Search term" />
+		<label><input type="checkbox" id="searchNodesCheckbox" checked /> Search Nodes</label>
+		<label><input type="checkbox" id="searchEdgesCheckbox" /> Search Edges</label>
+		<button class="button" id="executeSearchBtn">Execute Search</button>
+	</div>
+
+	<div class="control-group">
+    <!-- Toggle for showing encryption/decryption features -->
+    <button class="button" id="toggleEncryptionFeaturesBtn" aria-label="Toggle Encryption Features">🔐</button>
+    <div id="encryptionFeatures" class="input-group" style="display: none;">
+        <!-- Encryption Toggle and Key Input -->
+        <label>Encryption: <input type="checkbox" id="toggleEncryption" /></label>	
+        <input type="text" id="encryptionKey" placeholder="Encryption Key" style="margin-left: 10px;" />
+        
+        <!-- Import Key File Button -->
+        <button class="button" id="importKeyFileBtn" aria-label="Import Key File">📁</button>
+        <input type="file" id="importKeyInput" style="display: none;" accept=".json">
+        
+        <!-- Decrypt Graph Button -->
+        <button class="button" id="decryptGraphBtn" aria-label="Decrypt Graph">🔓</button>
+		
+		 <!-- Encrypt Graph Button -->
+		<button class="button" id="encryptGraphBtn" aria-label="Encrypt Graph">🔒</button>
+    </div>
+	</div>
+	
+	<!-- Toggle Image Mode Control -->
+	<div class="control-group">
+        <button class="button" id="toggleImageModeBtn" aria-label="Toggle Image Mode">🖼️ Mode</button>
+    </div>
+
+	<button class="button reset-btn" id="resetZoomBtn" aria-label="Reset Zoom">🔄</button>
+    <!-- Import Graph Button -->
+    <button class="button import-btn" id="importGraphBtn" aria-label="Import Graph">📥</button>
+    <!-- Export Graph Button -->
+    <button class="button export-btn" id="exportGraphBtn" aria-label="Export Graph">📤</button>
+    <input type="file" id="importFileInput" style="display: none;" accept=".json">
+    <!-- Import Mapping Button -->
+
+
+</div>
+
+
+<div id="graphContainer" style="position: relative; height: 100%;">
+    <div id="cy" style="height: 100%;"></div>
+    <div id="toolbar">
+        <button id="selectMode" class="toolbar-btn" title="Select Mode">
+            <img src="ui/images/select-icon.png" alt="Select" />
+        </button>
+        <button id="addNodeMode" class="toolbar-btn" title="Add Node Mode">
+            <img src="ui/images/add-node-icon.png" alt="Add Node" />
+        </button>
+        <button id="addEdgeMode" class="toolbar-btn" title="Add Edge Mode">
+            <img src="ui/images/add-edge-icon.png" alt="Add Edge" />
+        </button>
+        <button id="filterByArticleMode" class="toolbar-btn" title="Filter By article Mode">
+            <img src="ui/images/filter-article-icon.png" alt="Filter article" />
+        </button>
+    </div>
+</div>
+
+<script type="module" defer src="index.js"></script>
+
+
+</body>
+</html>
