@@ -42,6 +42,6 @@ app.post('/proxy', async (req, res) => {
     }
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Proxy server listening on all interfaces at port ${PORT}`);
+app.listen(PORT, () => {
+    console.log(`Proxy server listening on port ${PORT}`);
 });
